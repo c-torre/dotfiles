@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# Use neovim for vim if present.
+command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
+
+# Verbosity and settings that you pretty much just always are going to want.
+alias \
+	bat="cat /sys/class/power_supply/BAT?/capacity" \
+	cp="cp -iv" \
+	mv="mv -iv" \
+	rm="rm -v" \
+	mkd="mkdir -pv" \
+        vimb="vimb" \
+	yt="youtube-dl --add-metadata -i" \
+	yta="yt -x -f bestaudio/best" \
+	ffmpeg="ffmpeg -hide_banner"
+
+# Colorize commands when possible.
+alias \
+	ls="ls -hN --color=auto --group-directories-first" \
+	grep="grep --color=auto" \
+	diff="diff --color=auto" \
+	ccat="highlight --out-format=ansi"
+
+# These common commands are just too long! Abbreviate them.
+alias \
+	ka="killall" \
+	g="git" \
+	trem="transmission-remote" \
+	YT="youtube-viewer" \
+	sdn="sudo shutdown -h now" \
+	kms="pkill -u $USER" \
+	la="ls -A" \
+	ll="ls -lAh" \
+	f="$FILE" \
+	v="nvim" \
+	z="zathura" \
+    s="sxiv" \
+	p="sudo pacman" \
+    pac="sudo pacman -Syu" \
+    pacq="pacman -Qeq" \
+    pacs="pacman -Ss" \
+    pacrm="sudo pacman -Rns" \
+	xi="sudo xbps-install" \
+	xr="sudo xbps-remove -R" \
+	xq="xbps-query" \
+
+# Enable terminal swallowing
+alias \
+    mpv="devour mpv" \
+    sxiv="devour sxiv" \
+    zathura="devour zathura" \
+    firefox="devour firefox" \
+    evince="devour evince" \
+    gthumb="devour gthumb" \
+    sent="devour sent"
+
+# Some other stuff
+alias \
+	magit="nvim -c MagitOnly" \
+	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/zshnameddirrc" \
+	weath="curl wttr.in" \
+	tmux="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" \
+    dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+	# weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
