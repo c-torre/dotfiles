@@ -1,0 +1,8 @@
+#!/bin/sh
+# Create a customized tty keymap which makes Caps Lock another Esc
+
+mkdir -p /usr/local/share/kbd/keymaps
+echo "keycode 58 = Escape" > /usr/local/share/kbd/keymaps/caps-is-esc.map
+echo "KEYMAP=/usr/local/share/kbd/keymaps/caps-is-esc.map" > /etc/vconsole.conf
+loadkeys /usr/local/share/kbd/keymaps/caps-is-esc.map
+
