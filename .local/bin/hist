@@ -1,0 +1,4 @@
+#!/bin/sh
+# Fuzzy search command history and execute selected
+
+eval `fc -ln | fzf`
