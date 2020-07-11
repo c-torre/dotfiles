@@ -37,6 +37,8 @@ alias \
 	z="zathura" \
     s="sxiv" \
 	p="sudo pacman" \
+    nb="newsboat" \
+    nm="neomutt" \
     pac="sudo pacman -Syu" \
     pacq="pacman -Qeq" \
     pacs="pacman -Ss" \
@@ -44,6 +46,7 @@ alias \
 	xi="sudo xbps-install" \
 	xr="sudo xbps-remove -R" \
 	xq="xbps-query" \
+	:q="exit" \
 
 # Enable terminal swallowing
 alias \
