@@ -77,18 +77,22 @@ keys = [
     #     background="#15181a",
     # ))),
     Key([mod], "BackSpace", lazy.spawn("slock")),
+        # cycle to previous group
+    Key([mod], "u", lazy.group.prevgroup()),
+    # cycle to next group
+    Key([mod], "m", lazy.group.nextgroup()),
 ]
 
 # groups = [Group(i) for i in "asdfuiop"]
-groups = [Group(i) for i in "123456789"]
+groups = [Group(str(i)) for i in range(1, 10)]
 
-for i in groups:
+for group in groups:
     keys.extend([
         # mod1 + letter of group = switch to group
-        Key([mod], i.name, lazy.group[i.name].toscreen()),
+        Key([mod], group.name, lazy.group[group.name].toscreen()),
 
         # mod1 + shift + letter of group = switch to & move focused window to group
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True)),
+        Key([mod, "shift"], group.name, lazy.window.togroup(group.name, switch_group=True)),
         # Or, use below if you prefer not to switch to that group.
         # # mod1 + shift + letter of group = move focused window to group
         # Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
@@ -132,7 +136,8 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 def activities_text():
-    return "Activities"
+    # return "Activities" TODO fix
+    return ""
 
 screens = [
     Screen(
@@ -148,16 +153,17 @@ screens = [
                 widget.Systray(),
                 #widget.Spacer(),
                 widget.Clock(format='%a %d %b %H:%M'),
-                widget.CheckUpdates(
-                    display_format="{updates}↑"),
+                #widget.CheckUpdates(
+                #    display_format="{updates}↑"),
                 # widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
-                widget.PulseVolume(),
+                #widget.PulseVolume(),
                 #widget.QuickExit(),
             ],
             24,
         ),
     ),
 ]
+#screens = [Screen()]  # No bar configuration
 
 # Drag floating layouts.
 mouse = [

@@ -1,0 +1,9 @@
+#!/bin/sh
+# Mount cluster as file system
+# TODO cases for different remotes
+# TODO enable option umount with fusermount3 -u mountpoint
+
+sshfs carlosto@ukko2.cs.helsinki.fi:/proj/carlosto $XDG_DATA_HOME/dock
+
+
+
