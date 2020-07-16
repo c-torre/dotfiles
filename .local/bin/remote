@@ -20,7 +20,7 @@ mount_point=$XDG_DATA_HOME/mnt
 case $1 in
     -s)         ssh $2@$host ;;
     -f)         sftp $2@$host ;;
-    -m)         sshfs $2@$host:/home/$2 $mount_point && ln -s $mount_point $HOME/mnt ;;
-    -u)         fusermount3 -u $mount_point && unlink $HOME/mnt ;;
+    -m)         sshfs $2@$host:/home/$2 $mount_point && ln -s $mount_point $HOME/mnt && echo "Remote successfully mounted at $HOME/mnt" ;;
+    -u)         fusermount3 -u $mount_point && unlink $HOME/mnt && "Remote unmounted" ;;
     *)          help ;;
 esac

@@ -24,17 +24,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import os
+
 from libqtile.config import Key, Screen, Group, Drag, Click
 from libqtile.lazy import lazy
 from libqtile import layout, bar, extension, widget
 
 from typing import List  # noqa: F401
 
-TERM = "st"
+TERMINAL = os.getenv("TERMINAL")
 
 mod = "mod4"
 
-ACTIVITIES = "rofi -show combi"
+ACTIVITIES = "rofi -show combi -font 'Cantarell 10' -icon-theme 'Adwaita' -show-icons"
 
 keys = [
     Key([mod], "j", lazy.layout.down()),
@@ -43,8 +45,8 @@ keys = [
     Key([mod, "shift"], "l", lazy.layout.swap_right()),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
-    Key([mod], "l", lazy.layout.grow()),
-    Key([mod], "h", lazy.layout.shrink()),
+    Key([mod], "l", lazy.layout.grow_main()),
+    Key([mod], "h", lazy.layout.shrink_main()),
     Key([mod], "n", lazy.layout.normalize()),
     Key([mod], "o", lazy.layout.maximize()),
     # # Switch between windows in current stack pane
@@ -65,7 +67,8 @@ keys = [
     # Unsplit = 1 window displayed, like Max layout, but still with
     # multiple stack panes
     Key([mod, "shift"], "Return", lazy.layout.toggle_split()),
-    Key([mod], "Return", lazy.spawn(TERM + " -e tmux")),
+    Key([mod], "Return", lazy.spawn(TERMINAL)),
+    # Key([mod], "Return", lazy.spawn(TERM + " -e tmux")),
     Key([mod], "d", lazy.spawn(ACTIVITIES)),
 
     # Toggle between different layouts as defined below
@@ -137,8 +140,7 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 
-screens = [
-    Screen(
+screen = Screen(
         top=bar.Bar(
             [
                 widget.TextBox(
@@ -165,8 +167,10 @@ screens = [
             ],
             24,
         ),
-    ),
-]
+    )
+
+screens = [screen, screen]
+
 #screens = [Screen()]  # No bar configuration
 
 # Drag floating layouts.
