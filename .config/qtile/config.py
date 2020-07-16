@@ -34,6 +34,7 @@ TERM = "st"
 
 mod = "mod4"
 
+ACTIVITIES = "rofi -show combi"
 
 keys = [
     Key([mod], "j", lazy.layout.down()),
@@ -65,7 +66,7 @@ keys = [
     # multiple stack panes
     Key([mod, "shift"], "Return", lazy.layout.toggle_split()),
     Key([mod], "Return", lazy.spawn(TERM + " -e tmux")),
-    Key([mod], "d", lazy.spawn("rofi -show combi")),
+    Key([mod], "d", lazy.spawn(ACTIVITIES)),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout()),
@@ -135,24 +136,27 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-def activities_text():
-    # return "Activities" TODO fix
-    return ""
 
 screens = [
     Screen(
         top=bar.Bar(
             [
-                widget.GenPollText(func=activities_text, mouse_callbacks={"Button1": lazy.spawn("st")}),
-                #widget.CurrentLayout(),
-                # widget.Image(length=5),
-                widget.GroupBox(hide_unused=True),
+                widget.TextBox(
+                    text=" Activities",
+                    mouse_callbacks={
+                        "Button1": lambda qtile: qtile.cmd_spawn(ACTIVITIES)
+                    }
+                ),
                 widget.Prompt(),
+                widget.Sep(linewidth=0, padding=7),
+                widget.GroupBox(hide_unused=True),
+                widget.Sep(linewidth=0, padding=7),
                 widget.WindowName(),
-                # widget.TextBox("default config", name="default"),
-                widget.Systray(),
-                #widget.Spacer(),
+                widget.Systray(icon_size=15),
+                widget.Sep(linewidth=0, padding=7),
                 widget.Clock(format='%a %d %b %H:%M'),
+                # widget.Volume(emoji=True),  # Needs icons
+                #widget.Spacer(),
                 #widget.CheckUpdates(
                 #    display_format="{updates}↑"),
                 # widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
