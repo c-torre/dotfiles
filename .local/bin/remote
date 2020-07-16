@@ -1,0 +1,26 @@
+#!/bin/sh
+# Mount cluster as file system
+# Should clean script and UX
+
+help() {
+    echo "Usage: remote -option remote_username
+
+    Options:
+    -s: ssh -- shell
+    -f: sftp -- file transfer
+    -m: sshfs -- mount remote
+    -u: fusermount3 -u -- umount remote" && exit
+    }
+
+[ -z ${2+x} ] && help
+
+host=`cut -d" " -f1 $HOME/.ssh/known_hosts | fzf`
+mount_point=$XDG_DATA_HOME/mnt
+
+case $1 in
+    -s)         ssh $2@$host ;;
+    -f)         sftp $2@$host ;;
+    -m)         sshfs $2@$host:/home/$2 $mount_point && ln -s $mount_point $HOME/mnt ;;
+    -u)         fusermount3 -u $mount_point && unlink $HOME/mnt ;;
+    *)          help ;;
+esac
