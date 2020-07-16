@@ -16,10 +16,11 @@ Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'lervag/vimtex'
 Plug 'jpalardy/vim-slime'
-Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
+" Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }  " Probable deprecation for slime alone
 Plug 'ap/vim-buftabline'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-eunuch'
+Plug 'majutsushi/tagbar'
 "Plug 'luochen1990/rainbow'
 " Plug 'frazrepo/vim-rainbow'
 "Plug 'bling/vim-airline'
@@ -142,15 +143,25 @@ nnoremap <bar> :call <SID>ToggleColorColumn()<cr>
     let g:pymode_run_bind = '<leader>r'
 
 " Terminal
-    tnoremap <Esc>t <C-\><C-n>
+    tnoremap <C-y> <C-\><C-n>
 
 " Vim slime
     let g:slime_target = "neovim"
 
-" IPython cells
-    nnoremap <leader>c :IPythonCellExecuteCell<CR>
+" IPython cells -- probable deprecation for slime built-ins
+"    nnoremap <leader>c :IPythonCellExecuteCell<CR>
 
 " coc extensions
     "let g:coc_global_extensions = [
     "    'coc-pairs',
     "]
+
+" tagbar
+let g:tagbar_autofocus=0
+let g:tagbar_width=20
+autocmd BufEnter *.py :call tagbar#autoopen(0)
+
+" slime for IPython
+let g:slime_python_ipython = 1
+let g:slime_cell_delimiter = "#%%"
+nmap <leader>c <Plug>SlimeSendCell
