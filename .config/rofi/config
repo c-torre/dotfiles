@@ -14,6 +14,6 @@ rofi.kb-move-word-back: Control+b
 rofi.kb-move-word-forward: Control+w
 rofi.kb-move-char-back: Control+h,Left
 rofi.kb-move-char-forward: Control+l,Right
-rofi.kb-remove-char-forward:
-rofi.kb-remove-char-back:
+rofi.kb-remove-char-forward: Delete
+rofi.kb-remove-char-back: BackSpace
 rofi.kb-remove-to-eol: Control+D
