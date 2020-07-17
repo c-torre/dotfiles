@@ -75,7 +75,7 @@ keys = [
     # Key([mod], 'r', lazy.run_extension(extension.DmenuRun(
     #     background="#15181a",
     # ))),
-    Key([mod], "BackSpace", lazy.spawn("slock")),
+    Key([mod], "x", lazy.spawn("slock")),
     # cycle to previous group
     #Key([mod], "u", lazy.group.prev_group().toscreen()),
     # cycle to next group
