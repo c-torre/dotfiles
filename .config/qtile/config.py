@@ -49,12 +49,7 @@ keys = [
     Key([mod], "h", lazy.layout.shrink_main()),
     Key([mod], "n", lazy.layout.normalize()),
     Key([mod], "o", lazy.layout.maximize()),
-    # # Switch between windows in current stack pane
-    # Key([mod], "k", lazy.layout.down()),
-    # Key([mod], "j", lazy.layout.up()),
-    # # Move windows up or down in current stack
-    # Key([mod, "control"], "k", lazy.layout.shuffle_down()),
-    # Key([mod, "control"], "j", lazy.layout.shuffle_up()),
+    Key([mod], "space", lazy.layout.swap_main()),
 
     # # Switch window focus to other pane(s) of stack
     # Key([mod], "space", lazy.layout.next()),
@@ -81,10 +76,10 @@ keys = [
     #     background="#15181a",
     # ))),
     Key([mod], "BackSpace", lazy.spawn("slock")),
-        # cycle to previous group
-    Key([mod], "u", lazy.group.prevgroup()),
+    # cycle to previous group
+    #Key([mod], "u", lazy.group.prev_group().toscreen()),
     # cycle to next group
-    Key([mod], "m", lazy.group.nextgroup()),
+    #Key([mod], "m", lazy.group.next_group()),
 ]
 
 # groups = [Group(i) for i in "asdfuiop"]
@@ -94,6 +89,8 @@ for group in groups:
     keys.extend([
         # mod1 + letter of group = switch to group
         Key([mod], group.name, lazy.group[group.name].toscreen()),
+        # Key([mod], "m", lazy.group[lazy.group.next_group()].toscreen()),
+        # Key([mod], "m", lazy.group.get_next_group.toscreen()),
 
         # mod1 + shift + letter of group = switch to & move focused window to group
         Key([mod, "shift"], group.name, lazy.window.togroup(group.name, switch_group=True)),
@@ -140,7 +137,8 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 
-screen = Screen(
+def get_screen():
+    return Screen(
         top=bar.Bar(
             [
                 widget.TextBox(
@@ -157,6 +155,13 @@ screen = Screen(
                 widget.Systray(icon_size=15),
                 widget.Sep(linewidth=0, padding=7),
                 widget.Clock(format='%a %d %b %H:%M'),
+                widget.Sep(linewidth=0, padding=7),
+                widget.TextBox(
+                    text="?",
+                    mouse_callbacks={
+                        "Button1": lambda qtile: qtile.cmd_spawn("show-manual")
+                    }
+                ),
                 # widget.Volume(emoji=True),  # Needs icons
                 #widget.Spacer(),
                 #widget.CheckUpdates(
@@ -169,7 +174,7 @@ screen = Screen(
         ),
     )
 
-screens = [screen, screen]
+screens = [get_screen(), get_screen()]
 
 #screens = [Screen()]  # No bar configuration
 
