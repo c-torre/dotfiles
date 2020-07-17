@@ -36,7 +36,7 @@ TERMINAL = os.getenv("TERMINAL")
 
 mod = "mod4"
 
-ACTIVITIES = "rofi -show combi -font 'Cantarell 10' -icon-theme 'Adwaita' -show-icons"
+ACTIVITIES = "rofi -show combi"
 
 keys = [
     Key([mod], "j", lazy.layout.down()),
