@@ -1,0 +1,22 @@
+#!/bin/sh
+# Common desktop settings
+
+help() {
+    echo "
+Usage: settings -option
+
+Options:
+-b: battery levels
+-n: network management
+-s: sound mixer
+    " && exit
+    }
+
+[ -z ${1+x} ] && help
+
+case $1 in
+    -b) cat /sys/class/power_supply/BAT?/capacity ;;
+    -n) nmtui ;;
+    -s) pulsemixer ;;
+    *)  help ;;
+esac
