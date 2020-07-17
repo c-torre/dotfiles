@@ -2,14 +2,13 @@
 # Common desktop settings
 
 help() {
-    echo "
-Usage: settings -option
+    echo "Usage: settings -option
 
 Options:
--b: battery levels
+-b: battery level
 -n: network management
 -s: sound mixer
-    " && exit
+-w: change wallpaper *notimplementederror*" && exit
     }
 
 [ -z ${1+x} ] && help

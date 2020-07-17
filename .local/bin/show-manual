@@ -1,0 +1,4 @@
+#!/bin/sh
+# Show the groff manual file in zathura
+
+groff -mom $XDG_DATA_HOME/manual.mom -Tpdf | zathura -

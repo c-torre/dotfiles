@@ -1,0 +1,5 @@
+#!/bin/sh
+
+file_name=`date -I | sed "s/-//g"`-$1-meeting.md
+file_path=$HOME/$1/meetings/$file_name
+nvim $file_path
