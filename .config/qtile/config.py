@@ -106,6 +106,8 @@ def get_layout_defaults():
         margin=5,
         new_at_current=True,
         ratio=0.55,
+        max_ratio=0.9,
+        min_ratio=0.1,
 )
 
 
