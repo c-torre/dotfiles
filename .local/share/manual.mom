@@ -3,26 +3,34 @@
 .SHIFT_LIST 10p
 ..
 .PARA_SPACE 1m
-.TITLE "\s+(10User Manual\s0"
-.AUTHOR "\s+5Carlos\s0"
+.TITLE "\s+(10System User Manual\s0"
+.AUTHOR "\s+5System Developers\s0"
 .DOCTYPE    DEFAULT
 .COPYSTYLE  FINAL
 .PRINTSTYLE TYPESET
 .PT_SIZE 12
 .START
 Welcome home!
-The configuration layer allows to get benefits from power users with enhanced discoverability.
+The configuration layer allows to get benefits for power users with enhanced discoverability.
 To show this manual at any point, type \f(CWshow-manual\fP in the terminal.
 
-To navigate this document, use vim keys (\f(CWh j k l\fP).
-Search for words with (\f(CW/\fP).
-Pressing \f(CWs\fP will fit it to window width (\f(CWa\fP to revert).
+To navigate this document, you will use the key-bindings similar to those used in \fBvim\fP, but for your document viewer, \fBzathura\fP:
+.LI
+.ITEM
+\f(CWh j k l\fP \(en Move left, down, up, right
+.ITEM
+\f(CW/\fP \(en Search for words
+.ITEM
+\f(CWs\fP \(en Fit it to window width (\f(CWa\fP to revert).
+.ITEM
 \f(CWK\fP and \f(CWJ\fP zoom in and out.
+.FOOTNOTE
+The Super key is usually one or two positions to the left of your space bar.
+It is usually labeled with some proprietary operative system symbol.
+.FOOTNOTE OFF
 \f(CWSuper+f\fP to toggle fullscreen.
 \f(CWf\fP will highlight links to follow which are selectable by typing the number that appears plus \f(CWEnter\fP.
 \f(CWq\fP to quit.
-(These are general binds set for \fBzathura\fP, the pdf reader.)
-.LI
 .ITEM
 \f(CWMod+F1\fP will show this document at any time.
 .ITEM
@@ -70,8 +78,11 @@ In case customization is needed, everything should be easy to modify, and users 
 .ITEM
 \fBFreedom\fP \(en
 You are the sole indisputed owner of your computing.
-Nobody is welcome to your digital home unless very explicitly invited.
-For this, the system focuses on usable privacy and security (statement without legal value).
+Nobody is welcome to your digital home unless explicitly invited.
+.FOOTNOTE
+As with everything, statement without legal value.
+.FOOTNOTE OFF
+For this, the system focuses on usable privacy and security.
 All software intended for this configuration is Free Software as defined by the GNU operative system.
 .LIST OFF
 .HEADING 2 "General keyboard changes"
@@ -331,6 +342,42 @@ LARBS is deployed as a git repository in your home directory.
 You can use it as such to fetch, diff and merge changes from the remote repository.
 If you don't want to do that or don't know how to use git, you can actually just rerun the script (as root) and reinstall LARBS and it will automatically update an existing install if you select the same username.
 This will overwrite the original config files though, including changes you made for them, but this is an easier brute force approach that will also install any new dependencies.
+.HEADING 1 "Design F.A.Q.
+.HEADING 2 "Why focus on terminal applications?"
+.PP
+Terminal applications are efficient for the user and have a small system footprint.
+They also get you closer to how a computer does its tasks.
+Being the owner of your computing is easier in these conditions.
+Efficiency allows you to use older and less powerful computers that would otherwise go to waste.
+It also allows to not to reinvent the wheel: you will often find revolutionary graphical programs that are just equivalent to a few terminal utilities with pipes.
+However, the price to pay is that they are less discoverable (you do not find or forget the commands).
+We address this by providing an universal point of entry (this manual), memorable names, menus, and descriptive help text.
+In summary, terminal applications are your ticket to speed, power, and independence.
+.HEADING 2 "Why do I sometimes see menus, while others I just need commands?"
+.PP
+This depends on how the program or script is expected to be used.
+If the script is to be used infrequently, discoverability is a priority, and fzf is used.
+If the script is expected to be part of your workflow, you will be asked for commands, as these are faster to issue and normal repetition takes care of memorization.
+For the latter case, easy help is always displayed in case the user is new to the command, or just forgot.
+.HEADING 2 "Why is mouse support limited?"
+.PP
+This configuration layer aims to teach the efficient keyboard-only workflow; the mouse is slow and promote inefficient interfaces (unless you are Plan 9).
+Pointing devices such as mice or trackpads are still unfortunately needed for e.g. some web browsing.
+There are mainly two use cases for pointing devices: new users, and browsing the internet.
+For new users, we expect them to try and click on an almost empty interface, which will land them sooner or later in this manual, hopefully.
+For browsing the internet, as no tabs are supported, is can be convienient to have a hot corner to access all open windows.
+.HEADING 2 "Why QTile?"
+.PP
+This question is often asked from the perspective that there are faster window managers.
+The answer is that micro-optimizations in the choice of the WM do not really increase speed; they are small programs after all.
+If speed is not a benefit, it is worth trading for hackability.
+This is an opinionated workflow that you are not expected to modify, but if you insist, have special needs, or have a brilliant idea that can make it to upstream, that is alone worth it.
+.HEADING 2 "Why st?"
+.PP
+It is fast and sane terminal.
+Contrary to the WM, it should not benefit from tweaking at all, unless you really want to.
+If you insist, hack on it and compile.
+Or just swap it for Alacritty, or other choice.
 .HEADING 1 "Contact"
 .LI
 .ITEM
