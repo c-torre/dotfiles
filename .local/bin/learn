@@ -1,0 +1,7 @@
+#!/bin/sh
+# Search and display a lecture from MIT Missing Semester
+# Source at https://github.com/missing-semester/missing-semester
+
+dir=$XDG_DATA_HOME/missing-semester/_2020
+doc=`ls $dir | fzf --prompt="Choose a topic: "`
+smu < $dir/$doc | vimb -
