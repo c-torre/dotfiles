@@ -14,13 +14,14 @@ Options:
 
 [ -z ${2+x} ] && help
 
-host=`cut -d" " -f1 $HOME/.ssh/known_hosts | fzf`
+#host=`cut -d" " -f1 $HOME/.ssh/known_hosts | fzf`
+host=`cat $HOME/.ssh/known_hosts | tr ',' '\n' | tr -d '[' | cut -d' ' -f1 | fzf`
 mount_point=$XDG_DATA_HOME/mnt
 
 case $1 in
     -s)         ssh $2@$host ;;
     -f)         sftp $2@$host ;;
-    -m)         sshfs $2@$host:/home/$2 $mount_point && ln -s $mount_point $HOME/mnt && echo "Remote successfully mounted at $HOME/mnt" ;;
+    -m)         sshfs $2@$host:/ $mount_point && ln -s $mount_point $HOME/mnt && echo "Remote successfully mounted at $HOME/mnt" ;;
     -u)         fusermount3 -u $mount_point && unlink $HOME/mnt && echo "Remote unmounted" ;;
     *)          help ;;
 esac
