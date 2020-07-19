@@ -1,0 +1,11 @@
+#!/bin/sh
+# Manage web browser, searches by default
+# TODO expand with search options and bookmarks etc.
+
+help() {
+    echo "Usage: web-browser search_query"
+    }
+
+[ -z ${1+x} ] && help
+
+$BROWSER https://duckduckgo.com/?q=`echo $1 | sed "s/ /+/g"`

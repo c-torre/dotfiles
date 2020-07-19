@@ -24,6 +24,7 @@ alias \
 
 # These common commands are just too long! Abbreviate them.
 alias \
+    b="web-browser" \
 	ka="killall" \
 	g="git" \
 	trem="transmission-remote" \
@@ -48,15 +49,15 @@ alias \
 	xq="xbps-query" \
 	:q="exit" \
 
-# Enable terminal swallowing
-alias \
-    mpv="devour mpv" \
-    sxiv="devour sxiv" \
-    zathura="devour zathura" \
-    firefox="devour firefox" \
-    evince="devour evince" \
-    gthumb="devour gthumb" \
-    sent="devour sent"
+# # Enable terminal swallowing
+# alias \
+#     mpv="devour mpv" \
+#     sxiv="devour sxiv" \
+#     zathura="devour zathura" \
+#     firefox="devour firefox" \
+#     evince="devour evince" \
+#     gthumb="devour gthumb" \
+#     sent="devour sent"
 
 # Some other stuff
 alias \

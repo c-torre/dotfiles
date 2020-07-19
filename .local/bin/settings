@@ -6,16 +6,21 @@ help() {
 
 Options:
 -b: battery level
+-d: displays
 -n: network management
 -s: sound mixer
--w: change wallpaper *notimplementederror*" && exit
+-w: change wallpaper
+-wp: wallpaper preview (does not set it)" && exit
     }
 
 [ -z ${1+x} ] && help
 
 case $1 in
     -b) cat /sys/class/power_supply/BAT?/capacity ;;
+    -d) arandr & ;;
     -n) nmtui ;;
     -s) pulsemixer ;;
+    -w) wal=`ls $WALLPAPER_DIR | fzf` && setbg $WALLPAPER_DIR/$wal ;;
+    -wp) sxiv -t $WALLPAPER_DIR/* & ;;
     *)  help ;;
 esac

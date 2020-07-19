@@ -36,7 +36,7 @@ TERMINAL = os.getenv("TERMINAL")
 
 mod = "mod4"
 
-ACTIVITIES = "rofi -show combi"
+LAUNCHER = "rofi -show run"
 
 keys = [
     Key([mod], "j", lazy.layout.down()),
@@ -64,7 +64,7 @@ keys = [
     Key([mod, "shift"], "Return", lazy.layout.toggle_split()),
     Key([mod], "Return", lazy.spawn(TERMINAL)),
     # Key([mod], "Return", lazy.spawn(TERM + " -e tmux")),
-    Key([mod], "d", lazy.spawn(ACTIVITIES)),
+    Key([mod], "d", lazy.spawn(LAUNCHER)),
 
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout()),
@@ -146,7 +146,7 @@ def get_screen():
                 widget.TextBox(
                     text=" Activities",
                     mouse_callbacks={
-                        "Button1": lambda qtile: qtile.cmd_spawn(ACTIVITIES)
+                        "Button1": lambda qtile: qtile.cmd_spawn(LAUNCHER)
                     }
                 ),
                 widget.Prompt(),
