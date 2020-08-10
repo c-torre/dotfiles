@@ -19,7 +19,7 @@ Check `requirements` included for convenience:
 # pacman -S --needed - < requirements
 ```
 
-(More info)[https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Install_packages_from_a_list]
+[More info](https://wiki.archlinux.org/index.php/Pacman/Tips_and_tricks#Install_packages_from_a_list)
 
 Contributing
 ------------
