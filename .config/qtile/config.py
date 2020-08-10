@@ -51,7 +51,9 @@ MOD_KEY = "mod4"  # Super key
 keys = key_bindings.get_key_bindings(MOD_KEY, TERMINAL, LAUNCHER, DISPLAY_LOCKER)
 
 
-def make_groups_and_keybindings():
+def make_groups_and_keybindings() -> tuple:
+    """Make groups and their respective keybindings"""
+
     groups = tuple(Group(str(i)) for i in range(1, 10))
 
     for group in groups:
@@ -66,6 +68,7 @@ def make_groups_and_keybindings():
         ])
 
     return groups
+
 
 groups = make_groups_and_keybindings()
 
@@ -82,34 +85,44 @@ def get_layout_defaults() -> dict:
         min_ratio=1 - max_,
 )
 
-# Enabled xmonad/dwm-like horizontal and vertical stack
-layouts = [
-    # layout.Stack(num_stacks=2),
-    # Try more layouts by unleashing below layouts.
-    # layout.Bsp(),
-    # layout.Columns(),
-    # layout.Matrix(),
-    layout.MonadTall(
-        **get_layout_defaults()
-    ),
-    layout.MonadWide(
-        **get_layout_defaults()
-    ),
-    # layout.Max(),
-    # layout.RatioTile(),
-    # layout.Tile(),
-    # layout.TreeTab(),
-    # layout.VerticalTile(),
-    # layout.Zoomy(),
-]
+def get_layouts() -> tuple:
+    """Enable xmonad/dwm-like horizontal and vertical stack"""
 
-widget_defaults = dict(
-    font='sans',
-    fontsize=12,
-    padding=3,
-)
+    return (
+        # layout.Stack(num_stacks=2),
+        # Try more layouts by unleashing below layouts.
+        # layout.Bsp(),
+        # layout.Columns(),
+        # layout.Matrix(),
+        layout.MonadTall(
+            **get_layout_defaults()
+        ),
+        layout.MonadWide(
+            **get_layout_defaults()
+        ),
+        # layout.Max(),
+        # layout.RatioTile(),
+        # layout.Tile(),
+        # layout.TreeTab(),
+        # layout.VerticalTile(),
+        # layout.Zoomy(),
+    )
 
-extension_defaults = widget_defaults.copy()
+
+layouts = get_layouts()
+
+
+def get_widget_defaults() -> dict:
+    """Get widget default settings"""
+
+    return dict(
+        font='sans',
+        fontsize=12,
+        padding=3,
+    )
+
+
+extension_defaults = get_widget_defaults()
 
 
 def get_screen(linewidth, padding):
