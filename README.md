@@ -1,7 +1,7 @@
 Dotfiles
 ========
 
-My configuration files made to work in a Parabola GNU/Linux-libre system.
+My configuration files made to work on a [Parabola GNU/Linux-libre](https://www.parabola.nu/) system.
 Some are forked from Luke Smith's voidrice.
 Others from that repository are unaltered and not pushed here.
 
