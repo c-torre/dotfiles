@@ -32,87 +32,58 @@ from libqtile import layout, bar, extension, widget
 
 from typing import List  # noqa: F401
 
-TERMINAL = os.getenv("TERMINAL")
+import key_bindings
 
-mod = "mod4"
+# General configuration
+NUM_SCREENS = 2
 
+# Default programs
+try:
+    TERMINAL = os.getenv("TERMINAL")
+except:
+    TERMINAL = "xterm-256color"
 LAUNCHER = "rofi -show run"
+DISPLAY_LOCKER = "slock"
 
-keys = [
-    Key([mod], "j", lazy.layout.down()),
-    Key([mod], "k", lazy.layout.up()),
-    Key([mod, "shift"], "h", lazy.layout.swap_left()),
-    Key([mod, "shift"], "l", lazy.layout.swap_right()),
-    Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
-    Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
-    Key([mod], "l", lazy.layout.grow_main()),
-    Key([mod], "h", lazy.layout.shrink_main()),
-    Key([mod], "n", lazy.layout.normalize()),
-    Key([mod], "o", lazy.layout.maximize()),
-    Key([mod], "space", lazy.layout.swap_main()),
+# Key bindings configuration
+MOD_KEY = "mod4"  # Super key
 
-    # # Switch window focus to other pane(s) of stack
-    # Key([mod], "space", lazy.layout.next()),
-
-    # # Swap panes of split stack
-    # Key([mod, "shift"], "space", lazy.layout.rotate()),
-
-    # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    Key([mod, "shift"], "Return", lazy.layout.toggle_split()),
-    Key([mod], "Return", lazy.spawn(TERMINAL)),
-    # Key([mod], "Return", lazy.spawn(TERM + " -e tmux")),
-    Key([mod], "d", lazy.spawn(LAUNCHER)),
-
-    # Toggle between different layouts as defined below
-    Key([mod], "Tab", lazy.next_layout()),
-    Key([mod], "q", lazy.window.kill()),
-
-    Key([mod, "control"], "r", lazy.restart()),
-    Key([mod, "control"], "q", lazy.shutdown()),
-    # Key([mod], 'r', lazy.run_extension(extension.DmenuRun(
-    #     background="#15181a",
-    # ))),
-    Key([mod], "x", lazy.spawn("slock")),
-    # cycle to previous group
-    #Key([mod], "u", lazy.group.prev_group().toscreen()),
-    # cycle to next group
-    #Key([mod], "m", lazy.group.next_group()),
-]
-
-# groups = [Group(i) for i in "asdfuiop"]
-groups = [Group(str(i)) for i in range(1, 10)]
-
-for group in groups:
-    keys.extend([
-        # mod1 + letter of group = switch to group
-        Key([mod], group.name, lazy.group[group.name].toscreen()),
-        # Key([mod], "m", lazy.group[lazy.group.next_group()].toscreen()),
-        # Key([mod], "m", lazy.group.get_next_group.toscreen()),
-
-        # mod1 + shift + letter of group = switch to & move focused window to group
-        Key([mod, "shift"], group.name, lazy.window.togroup(group.name, switch_group=True)),
-        # Or, use below if you prefer not to switch to that group.
-        # # mod1 + shift + letter of group = move focused window to group
-        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name)),
-    ])
+keys = key_bindings.get_key_bindings(MOD_KEY, TERMINAL, LAUNCHER, DISPLAY_LOCKER)
 
 
-def get_layout_defaults():
+def make_groups_and_keybindings():
+    groups = tuple(Group(str(i)) for i in range(1, 10))
+
+    for group in groups:
+        keys.extend([
+            # mod1 + letter of group = switch to group
+            Key(frozenset({MOD_KEY}), group.name, lazy.group[group.name].toscreen()),
+            # mod1 + shift + letter of group = switch to & move focused window to group
+            # Key([mod, "shift"], group.name, lazy.window.togroup(group.name, switch_group=True)),
+            # Or, use below if you prefer not to switch to that group.
+            # mod1 + shift + letter of group = move focused window to group
+            Key(frozenset({MOD_KEY, "shift"}), group.name, lazy.window.togroup(group.name)),
+        ])
+
+    return groups
+
+groups = make_groups_and_keybindings()
+
+
+def get_layout_defaults() -> dict:
+    """Make default settings for layouts"""
+
     return dict(
-        border_focus="#ffffff",
-        margin=5,
-        new_at_current=True,
-        ratio=0.55,
-        max_ratio=0.9,
-        min_ratio=0.1,
+        border_focus="#ffffff",  # White border
+        margin=5,  # Useless gaps size
+        new_at_current=True,  # Open new pane at current stack
+        ratio=0.55,  # Main pane stack proportion
+        max_ratio=(max_:=0.8),
+        min_ratio=1 - max_,
 )
 
-
+# Enabled xmonad/dwm-like horizontal and vertical stack
 layouts = [
-    # layout.Max(),
     # layout.Stack(num_stacks=2),
     # Try more layouts by unleashing below layouts.
     # layout.Bsp(),
@@ -124,6 +95,7 @@ layouts = [
     layout.MonadWide(
         **get_layout_defaults()
     ),
+    # layout.Max(),
     # layout.RatioTile(),
     # layout.Tile(),
     # layout.TreeTab(),
@@ -136,57 +108,61 @@ widget_defaults = dict(
     fontsize=12,
     padding=3,
 )
+
 extension_defaults = widget_defaults.copy()
 
 
-def get_screen():
+def get_screen(linewidth, padding):
     return Screen(
         top=bar.Bar(
             [
-                widget.TextBox(
-                    text=" Activities",
-                    mouse_callbacks={
-                        "Button1": lambda qtile: qtile.cmd_spawn(LAUNCHER)
-                    }
+                # Bar left anchor
+                widget.Sep(
+                    linewidth=linewidth, padding=padding
                 ),
-                widget.Prompt(),
-                widget.Sep(linewidth=0, padding=7),
-                widget.GroupBox(hide_unused=True),
-                widget.Sep(linewidth=0, padding=7),
-                widget.WindowName(),
-                widget.Systray(icon_size=15),
-                widget.Sep(linewidth=0, padding=7),
-                widget.Clock(format='%a %d %b %H:%M'),
-                widget.Sep(linewidth=0, padding=7),
+                widget.GroupBox(
+                    hide_unused=True
+                ),
+                widget.Sep(
+                    linewidth=linewidth, padding=padding
+                ),
+                widget.WindowName(
+                ),
+                # Bar right anchor
+                widget.Systray(
+                    icon_size=15
+                ),
+                widget.Sep(
+                    linewidth=linewidth, padding=padding
+                ),
+                widget.Clock(
+                    format='%a %d %b %H:%M'
+                ),
+                widget.Sep(
+                    linewidth=linewidth, padding=padding
+                ),
                 widget.TextBox(
                     text="?",
                     mouse_callbacks={
                         "Button1": lambda qtile: qtile.cmd_spawn("show-manual")
-                    }
+                    },
                 ),
-                # widget.Volume(emoji=True),  # Needs icons
-                #widget.Spacer(),
-                #widget.CheckUpdates(
-                #    display_format="{updates}↑"),
-                # widget.Clock(format='%Y-%m-%d %a %I:%M %p'),
-                #widget.PulseVolume(),
-                #widget.QuickExit(),
+               #widget.QuickExit(),
             ],
             24,
         ),
     )
 
-screens = [get_screen(), get_screen()]
-
-#screens = [Screen()]  # No bar configuration
+screens = tuple(get_screen(linewidth=0, padding=7) for _ in range(NUM_SCREENS))
+#screens = tuple(Screen() for _ in range(NUM_SCREENS))  # No bar configuration
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(),
+    Drag(frozenset({MOD_KEY}), "Button1", lazy.window.set_position_floating(),
          start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(),
+    Drag(frozenset({MOD_KEY}), "Button3", lazy.window.set_size_floating(),
          start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front())
+    Click(frozenset({MOD_KEY}), "Button2", lazy.window.bring_to_front())
 ]
 
 dgroups_key_binder = None
