@@ -13,7 +13,7 @@ Clone this repository, make sure you have the required programs, and take the fi
 Requirements
 ------------
 
-Chech `requirements` included for convenience:
+Check `requirements` included for convenience:
 
 ```
 # pacman -S --needed - < requirements
