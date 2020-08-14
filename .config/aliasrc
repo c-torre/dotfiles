@@ -10,7 +10,7 @@ alias \
 	mv="mv -iv" \
 	rm="rm -v" \
 	mkd="mkdir -pv" \
-        vimb="vimb" \
+    vimb="vimb" \
 	yt="youtube-dl --add-metadata -i" \
 	yta="yt -x -f bestaudio/best" \
 	ffmpeg="ffmpeg -hide_banner"
@@ -65,5 +65,7 @@ alias \
 	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/zshnameddirrc" \
 	weath="curl wttr.in" \
 	tmux="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" \
-    dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+    dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME' \
+    import="echo 'Use import-alt'" \  # IPython safety
+    import_alt="command import" \
 	# weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
