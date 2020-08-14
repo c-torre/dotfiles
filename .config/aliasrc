@@ -66,6 +66,6 @@ alias \
 	weath="curl wttr.in" \
 	tmux="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" \
     dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME' \
-    import="echo 'Use import-alt'" \  # IPython safety
+    import="echo 'Use \`import_alt\` for original \`import\` use'" \  # IPython safety
     import_alt="command import" \
 	# weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
