@@ -38,10 +38,10 @@ import key_bindings
 NUM_SCREENS = 2
 
 # Default programs
-try:
-    TERMINAL = os.getenv("TERMINAL")
-except:
-    TERMINAL = "xterm-256color"
+if terminal := os.getenv("TERMINAL"):
+    TERMINAL = terminal
+else:
+    TERMINAL = "xterm"
 LAUNCHER = "rofi -show run"
 DISPLAY_LOCKER = "slock"
 
@@ -57,15 +57,23 @@ def make_groups_and_keybindings() -> tuple:
     groups = tuple(Group(str(i)) for i in range(1, 10))
 
     for group in groups:
-        keys.extend([
-            # mod1 + letter of group = switch to group
-            Key(frozenset({MOD_KEY}), group.name, lazy.group[group.name].toscreen()),
-            # mod1 + shift + letter of group = switch to & move focused window to group
-            # Key([mod, "shift"], group.name, lazy.window.togroup(group.name, switch_group=True)),
-            # Or, use below if you prefer not to switch to that group.
-            # mod1 + shift + letter of group = move focused window to group
-            Key(frozenset({MOD_KEY, "shift"}), group.name, lazy.window.togroup(group.name)),
-        ])
+        keys.extend(
+            [
+                # mod1 + letter of group = switch to group
+                Key(
+                    frozenset({MOD_KEY}), group.name, lazy.group[group.name].toscreen()
+                ),
+                # mod1 + shift + letter of group = switch to & move focused window to group
+                # Key([mod, "shift"], group.name, lazy.window.togroup(group.name, switch_group=True)),
+                # Or, use below if you prefer not to switch to that group.
+                # mod1 + shift + letter of group = move focused window to group
+                Key(
+                    frozenset({MOD_KEY, "shift"}),
+                    group.name,
+                    lazy.window.togroup(group.name),
+                ),
+            ]
+        )
 
     return groups
 
@@ -81,9 +89,10 @@ def get_layout_defaults() -> dict:
         margin=5,  # Useless gaps size
         new_at_current=True,  # Open new pane at current stack
         ratio=0.55,  # Main pane stack proportion
-        max_ratio=(max_:=0.8),
+        max_ratio=(max_ := 0.8),
         min_ratio=1 - max_,
-)
+    )
+
 
 def get_layouts() -> tuple:
     """Enable xmonad/dwm-like horizontal and vertical stack"""
@@ -94,12 +103,8 @@ def get_layouts() -> tuple:
         # layout.Bsp(),
         # layout.Columns(),
         # layout.Matrix(),
-        layout.MonadTall(
-            **get_layout_defaults()
-        ),
-        layout.MonadWide(
-            **get_layout_defaults()
-        ),
+        layout.MonadTall(**get_layout_defaults()),
+        layout.MonadWide(**get_layout_defaults()),
         # layout.Max(),
         # layout.RatioTile(),
         # layout.Tile(),
@@ -116,66 +121,87 @@ def get_widget_defaults() -> dict:
     """Get widget default settings"""
 
     return dict(
-        font='sans',
-        fontsize=12,
+        font="Cantarell Bold",
+        linewidth=0,
         padding=3,
-    )
+        fontsize=11,
+        font_shadow="000000",
+    )  # , fontsize=12, padding=3,)
 
 
-extension_defaults = get_widget_defaults()
+widget_defaults = get_widget_defaults()
 
 
-def get_screen(linewidth, padding):
+def get_screen(widget_defaults):
     return Screen(
         top=bar.Bar(
             [
-                # Bar left anchor
-                widget.Sep(
-                    linewidth=linewidth, padding=padding
-                ),
+                # Bar area left
+                widget.Sep(**widget_defaults),
                 widget.GroupBox(
-                    hide_unused=True
+                    hide_unused=True,
+                    disable_drag=True,
+                    block_highlight_text_color="000000",  # Necessary for font visible
+                    highlight_color=[
+                        "000000",
+                        "ffffff",
+                    ],  # Also necessary for font visible
+                    highlight_method="block",
+                    rounded=False,
+                    padding_y=10,  # Cover all bar in Y
+                    this_current_screen_border="eeeeee",  # Block color
+                    this_screen_border="aaaaaa",  # Block color
+                    # **widget_defaults,
                 ),
-                widget.Sep(
-                    linewidth=linewidth, padding=padding
-                ),
-                widget.WindowName(
-                ),
-                # Bar right anchor
-                widget.Systray(
-                    icon_size=15
-                ),
-                widget.Sep(
-                    linewidth=linewidth, padding=padding
-                ),
+                widget.Sep(**widget_defaults),
+                widget.Spacer(),
+                # Bar area center
                 widget.Clock(
-                    format='%a %d %b %H:%M'
+                    format="%a %d %b %H:%M",
+                    mouse_callbacks={
+                        "Button1": lambda qtile: qtile.cmd_spawn(
+                            ".config/qtile/scripts/show-calendar"
+                        )
+                    },
+                    **widget_defaults,
                 ),
-                widget.Sep(
-                    linewidth=linewidth, padding=padding
-                ),
+                # Bar area right
+                widget.Spacer(),
+                widget.Systray(icon_size=15),
+                widget.Sep(**widget_defaults),
+                widget.Sep(**widget_defaults),
                 widget.TextBox(
                     text="?",
                     mouse_callbacks={
                         "Button1": lambda qtile: qtile.cmd_spawn("show-manual")
                     },
                 ),
-               #widget.QuickExit(),
+                widget.Sep(**widget_defaults),
+                # widget.QuickExit(),
             ],
             24,
         ),
     )
 
-screens = tuple(get_screen(linewidth=0, padding=7) for _ in range(NUM_SCREENS))
-#screens = tuple(Screen() for _ in range(NUM_SCREENS))  # No bar configuration
+
+screens = tuple(get_screen(widget_defaults) for _ in range(NUM_SCREENS))
+# screens = tuple(Screen() for _ in range(NUM_SCREENS))  # No bar configuration
 
 # Drag floating layouts.
 mouse = [
-    Drag(frozenset({MOD_KEY}), "Button1", lazy.window.set_position_floating(),
-         start=lazy.window.get_position()),
-    Drag(frozenset({MOD_KEY}), "Button3", lazy.window.set_size_floating(),
-         start=lazy.window.get_size()),
-    Click(frozenset({MOD_KEY}), "Button2", lazy.window.bring_to_front())
+    Drag(
+        frozenset({MOD_KEY}),
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    Drag(
+        frozenset({MOD_KEY}),
+        "Button3",
+        lazy.window.set_size_floating(),
+        start=lazy.window.get_size(),
+    ),
+    Click(frozenset({MOD_KEY}), "Button2", lazy.window.bring_to_front()),
 ]
 
 dgroups_key_binder = None
@@ -184,23 +210,25 @@ main = None
 follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
-floating_layout = layout.Floating(float_rules=[
-    # Run the utility of `xprop` to see the wm class and name of an X client.
-    {'wmclass': 'confirm'},
-    {'wmclass': 'dialog'},
-    {'wmclass': 'download'},
-    {'wmclass': 'error'},
-    {'wmclass': 'file_progress'},
-    {'wmclass': 'notification'},
-    {'wmclass': 'splash'},
-    {'wmclass': 'toolbar'},
-    {'wmclass': 'confirmreset'},  # gitk
-    {'wmclass': 'makebranch'},  # gitk
-    {'wmclass': 'maketag'},  # gitk
-    {'wname': 'branchdialog'},  # gitk
-    {'wname': 'pinentry'},  # GPG key password entry
-    {'wmclass': 'ssh-askpass'},  # ssh-askpass
-])
+floating_layout = layout.Floating(
+    float_rules=[
+        # Run the utility of `xprop` to see the wm class and name of an X client.
+        {"wmclass": "confirm"},
+        {"wmclass": "dialog"},
+        {"wmclass": "download"},
+        {"wmclass": "error"},
+        {"wmclass": "file_progress"},
+        {"wmclass": "notification"},
+        {"wmclass": "splash"},
+        {"wmclass": "toolbar"},
+        {"wmclass": "confirmreset"},  # gitk
+        {"wmclass": "makebranch"},  # gitk
+        {"wmclass": "maketag"},  # gitk
+        {"wname": "branchdialog"},  # gitk
+        {"wname": "pinentry"},  # GPG key password entry
+        {"wmclass": "ssh-askpass"},  # ssh-askpass
+    ]
+)
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 
