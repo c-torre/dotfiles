@@ -2,4 +2,4 @@
 # Show calendar as notification for a long time
 # Highlight current day
 
-notify-send -t 999999 "$(cal | sed 1q)" "$(cal --color=always | sed "s/^/     /" | sed "s/..7m/<b><span color=\"cyan\">/;s/..27m/<\/span><\/b>/" | tail -n+2)"
+notify-send -t 999999 "$(cal | sed 1q)" "$(cal -m --color=always | sed "s/^/     /" | sed "s/..7m/<b><span color=\"cyan\">/;s/..27m/<\/span><\/b>/" | tail -n+2)"
