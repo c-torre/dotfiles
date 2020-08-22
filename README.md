@@ -23,7 +23,7 @@ Names and descriptions correspond to those found in a Parabola GNU/Linux-libre x
 The first column indicates the install method:
 
 * "a": [Arch User Repository (AUR)](https://wiki.archlinux.org/index.php/Arch_User_Repository)
-* "g": [git](https://wiki.archlinux.org/index.php/Git).
+* "g": [Git](https://wiki.archlinux.org/index.php/Git)
 * Any other: package manager (likely [pacman](https://wiki.archlinux.org/index.php/Pacman)).
 
 An install script is provided for the git and package manager methods for convenience.
