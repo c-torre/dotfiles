@@ -27,7 +27,8 @@ The first column indicates the install method:
 * Any other: package manager (likely [pacman](https://wiki.archlinux.org/index.php/Pacman)).
 
 An install script is provided for the git and package manager methods for convenience.
-Due to the nature of [AUR helpers](https://wiki.archlinux.org/index.php/AUR_helpers), providing a fully automated install script for AUR packages is challenging, and probably involved a significant security or system breaking risk.
+Use as root user (*not* temporary priviledge elevation).
+Due to the nature of [AUR helpers](https://wiki.archlinux.org/index.php/AUR_helpers) (fakeroot environment), providing a fully automated install script for AUR packages is challenging, and probably involved a significant security or system breaking risk.
 AUR packages from the list should be [manually installed](https://wiki.archlinux.org/index.php/Arch_User_Repository#Installing_and_upgrading_packages).
 The installation script *may* work on `apt`-based systems.
 

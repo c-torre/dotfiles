@@ -28,12 +28,15 @@ alias \
     ga="git add -A" \
     gc="git commit -m" \
     gp="git push" \
+    gpl="git pull" \
+    gps="git push" \
 	trem="transmission-remote" \
 	YT="youtube-viewer" \
 	sdn="sudo shutdown -h now" \
 	kms="pkill -u $USER" \
 	la="ls -A" \
 	ll="ls -lAh" \
+    lynx="lynx -vikeys" \
 	f="$FILE" \
 	v="nvim" \
 	z="zathura" \
@@ -45,7 +48,11 @@ alias \
     pacq="pacman -Qeq" \
     pacs="pacman -Ss" \
     pacrm="sudo pacman -Rns" \
-	:q="exit" \
+    pacrmlock="sudo rm /var/lib/pacman/db.lck" \
+    yayu="yay -Sua" \
+    psmem="ps auxf | sort -nr -k 4 | head" \
+    pscpu="ps auxf | sort -nr -k 3 | head" \
+	:q="exit"
 
 # # Enable terminal swallowing with devour.
 # alias \
