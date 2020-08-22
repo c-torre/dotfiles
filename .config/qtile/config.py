@@ -42,13 +42,16 @@ if terminal := os.getenv("TERMINAL"):
     TERMINAL = terminal
 else:
     TERMINAL = "xterm"
-LAUNCHER = "rofi -show run"
+LAUNCHER_SYS = "dmenu_run"
+LAUNCHER_WWW = "dmenu_websearch"
 DISPLAY_LOCKER = "slock"
 
 # Key bindings configuration
 MOD_KEY = "mod4"  # Super key
 
-keys = key_bindings.get_key_bindings(MOD_KEY, TERMINAL, LAUNCHER, DISPLAY_LOCKER)
+keys = key_bindings.get_key_bindings(
+    MOD_KEY, TERMINAL, LAUNCHER_SYS, LAUNCHER_WWW, DISPLAY_LOCKER
+)
 
 
 def make_groups_and_keybindings() -> tuple:
@@ -179,7 +182,7 @@ def get_screen(widget_defaults):
                 widget.Sep(**widget_defaults),
                 # widget.QuickExit(),
             ],
-            24,
+            19,  # Default 24,
         ),
     )
 
