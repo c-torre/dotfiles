@@ -11,7 +11,7 @@
 
 browser=$BROWSER
 engine='https://duckduckgo.com/?q=%s'
-bookmarks="$XDG_DATA_HOME/bookmarks-browser"
+bookmarks="$XDG_DATA_HOME/bookmarks-www"
 
 gotourl() {
 	if [ "$nbrowser" = surf ]

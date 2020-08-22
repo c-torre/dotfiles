@@ -10,7 +10,6 @@ alias \
 	mv="mv -iv" \
 	rm="rm -v" \
 	mkd="mkdir -pv" \
-    vimb="vimb" \
 	yt="youtube-dl --add-metadata -i" \
 	yta="yt -x -f bestaudio/best" \
 	ffmpeg="ffmpeg -hide_banner"
@@ -24,9 +23,11 @@ alias \
 
 # These common commands are just too long! Abbreviate them.
 alias \
-    b="web-browser" \
 	ka="killall" \
 	g="git" \
+    ga="git add -A" \
+    gc="git commit -m" \
+    gp="git push" \
 	trem="transmission-remote" \
 	YT="youtube-viewer" \
 	sdn="sudo shutdown -h now" \
@@ -37,24 +38,21 @@ alias \
 	v="nvim" \
 	z="zathura" \
     s="sxiv" \
-	p="sudo pacman" \
     nb="newsboat" \
     nm="neomutt" \
+	p="sudo pacman" \
     pac="sudo pacman -Syu" \
     pacq="pacman -Qeq" \
     pacs="pacman -Ss" \
     pacrm="sudo pacman -Rns" \
-	xi="sudo xbps-install" \
-	xr="sudo xbps-remove -R" \
-	xq="xbps-query" \
 	:q="exit" \
 
-# # Enable terminal swallowing
+# # Enable terminal swallowing with devour.
 # alias \
 #     mpv="devour mpv" \
 #     sxiv="devour sxiv" \
 #     zathura="devour zathura" \
-#     firefox="devour firefox" \
+#     iceweasel="devour iceweasel" \
 #     evince="devour evince" \
 #     gthumb="devour gthumb" \
 #     sent="devour sent"
@@ -66,6 +64,7 @@ alias \
 	weath="curl wttr.in" \
 	tmux="tmux -f ${XDG_CONFIG_HOME:-$HOME/.config}/tmux/tmux.conf" \
     dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME' \
+    dotfilespriv='git --git-dir=$HOME/.dotfiles-private/ --work-tree=$HOME' \
     import="echo 'Use \`import_alt\` for original \`import\` use'" \  # IPython safety
     import_alt="command import" \
 	# weath="less -S ${XDG_DATA_HOME:-$HOME/.local/share}/weatherreport" \
