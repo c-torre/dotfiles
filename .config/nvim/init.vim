@@ -7,20 +7,28 @@ if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autolo
 	autocmd VimEnter * PlugInstall
 endif
 
+""""" Plugins
+" Install plugin with :PlugInstall, remove with :PlugClean
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
+" Almost defaults
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
+" Aesthetics
 Plug 'morhetz/gruvbox'
+Plug 'ap/vim-buftabline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
+" Toolkit
+Plug 'tpope/vim-eunuch'
+Plug 'airblade/vim-gitgutter'
+" Development
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'lervag/vimtex'
 Plug 'jpalardy/vim-slime'
-" Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }  " Probable deprecation for slime alone
-Plug 'ap/vim-buftabline'
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-eunuch'
 Plug 'majutsushi/tagbar'
+" Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }  " Probable deprecation for slime alone
 "Plug 'luochen1990/rainbow'
 " Plug 'frazrepo/vim-rainbow'
 "Plug 'bling/vim-airline'
@@ -33,7 +41,10 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 " Colorscheme
 autocmd vimenter * colorscheme gruvbox
-hi Normal guibg=NONE ctermbg=NONE
+" hi Normal guibg=NONE ctermbg=NONE
+
+" Airline statusbar theme
+let g:airline_theme='minimalist'
 
 " Many sane defaults
 set t_Co=256                            " ALL the colors!
@@ -120,6 +131,8 @@ nnoremap <bar> :call <SID>ToggleColorColumn()<cr>
 " Open corresponding .pdf/.html or preview
 	map <leader>p :!opout <c-r>%<CR><CR>
 
+""""" LaTeX
+let g:tex_flavor = 'latex'
 " Runs a script that cleans out tex build files whenever I close out of a .tex file.
 	autocmd VimLeave *.tex !texclear %
 
@@ -150,6 +163,25 @@ nnoremap <bar> :call <SID>ToggleColorColumn()<cr>
 
 " IPython cells -- probable deprecation for slime built-ins
 "    nnoremap <leader>c :IPythonCellExecuteCell<CR>
+
+""""" CoC
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 
 " coc extensions
     "let g:coc_global_extensions = [
@@ -188,3 +220,4 @@ let g:pymode_syntax_docstrings=g:pymode_syntax_all
 
 " Python reformat with Black on save and reload buffer
 autocmd BufWritePost *.py execute "!black %" | edit
+

@@ -28,7 +28,7 @@ alias \
     ga="git add -A" \
     gc="git commit -m" \
     gp="git push" \
-    gpl="git pull" \
+    gpl="git pull --no-rebase" \
     gps="git push" \
 	trem="transmission-remote" \
 	YT="youtube-viewer" \

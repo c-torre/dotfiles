@@ -9,9 +9,17 @@
 # A  browser-independent address  bar  with bookmark  support. When  the
 # cursor is on a web browser it acts as the address bar of that browser.
 
+#browser="$BROWSER --new-window"
 browser=$BROWSER
 engine='https://duckduckgo.com/?q=%s'
 bookmarks="$XDG_DATA_HOME/bookmarks-www"
+
+# Start in a new window if Firefox family
+case "$browser" in
+    firefox) browser='firefox --new-window' ;;
+	icecat) browser='icecat --new-window' ;;
+	iceweasel) browser='iceweasel --new-window' ;;
+esac
 
 gotourl() {
 	if [ "$nbrowser" = surf ]
@@ -47,7 +55,7 @@ xprop -root | grep '^_NET_ACTIVE_WINDOW' && {
 		Firefox) nbrowser='firefox' ;;
 		#Firefox) shortcut='ctrl+l' ;; # alternative method, uses xdotool
 		IceCat) nbrowser='icecat' ;;
-		Iceweasel) nbrowser='iceweasel' ;; # not tested
+		Iceweasel) nbrowser='iceweasel' ;;
 		Chromium) nbrowser='chromium' ;; # not tested
 		Conkeror) nbrowser='conkeror' ;; # not tested
 		Brave) nbrowser='brave' ;; # not tested
