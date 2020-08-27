@@ -28,6 +28,7 @@ Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jpalardy/vim-slime'
 Plug 'majutsushi/tagbar'
+Plug 'dense-analysis/ale'
 " Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }  " Probable deprecation for slime alone
 "Plug 'luochen1990/rainbow'
 " Plug 'frazrepo/vim-rainbow'
@@ -219,5 +220,9 @@ let g:pymode_syntax_highlight_exceptions=g:pymode_syntax_all
 let g:pymode_syntax_docstrings=g:pymode_syntax_all
 
 " Python reformat with Black on save and reload buffer
-autocmd BufWritePost *.py execute "!black %" | edit
+" autocmd BufWritePost *.py execute '!black %' | edit
 
+" Ale formatting and fixing Python
+let g:ale_linters = {'python': ['flake8', 'pydocstyle', 'bandit', 'mypy']}
+let g:ale_fixers = {'python': ['black', 'isort']}
+let g:ale_fix_on_save = 1
