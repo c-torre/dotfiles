@@ -24,15 +24,14 @@ Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'airblade/vim-gitgutter'
 " Development
-Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jpalardy/vim-slime'
 Plug 'majutsushi/tagbar'
 Plug 'dense-analysis/ale'
-" Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }  " Probable deprecation for slime alone
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 "Plug 'luochen1990/rainbow'
-" Plug 'frazrepo/vim-rainbow'
-"Plug 'bling/vim-airline'
+"Plug 'frazrepo/vim-rainbow'
 call plug#end()
 
 " Open NERDTree if opened directory or none
@@ -41,8 +40,9 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif " Em
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif " Directory
 
 " Colorscheme
-autocmd vimenter * colorscheme gruvbox
-" hi Normal guibg=NONE ctermbg=NONE
+colorscheme gruvbox
+let g:gruvbox_transparent_bg=1
+highlight Normal ctermbg=None " alpha
 
 " Airline statusbar theme
 let g:airline_theme='minimalist'
@@ -52,8 +52,8 @@ set t_Co=256                            " ALL the colors!
 set ttyfast                             " don't lag…
 set cursorline                          " track position
 set nocompatible                        " leave the old ways behind…
-"set nowrap                              " don't wrap lines
-"set nobackup                            " disable backup files (filename~)
+"set nowrap                             " don't wrap lines
+"set nobackup                           " disable backup files (filename~)
 set splitbelow splitright               " place new files below the current
 set showmatch                           " matching brackets & the like
 set clipboard+=unnamed                  " yank and copy to X clipboard
@@ -62,7 +62,7 @@ set backspace=2                         " full backspacing capabilities (indent,
 set scrolloff=10                        " keep 10 lines of context
 set number relativenumber               " show line numbers
 set directory=~/.vim/swap               " save swap files here
-"set ww=b,s,h,l,<,>,[,]                  " whichwrap -- left/right keys can traverse up/down
+"set ww=b,s,h,l,<,>,[,]                 " whichwrap -- left/right keys can traverse up/down
 set linebreak                           " attempt to wrap lines cleanly
 set wildmenu                            " enhanced tab-completion shows all matching cmds in a popup menu
 set wildmode=list:longest,full          " full completion options
@@ -200,29 +200,32 @@ let g:slime_cell_delimiter = "#%%"
 nmap <leader>c <Plug>SlimeSendCell
 
 " Python syntax highlight
-let g:pymode_syntax=1
-let g:pymode_syntax_slow_sync=1
-let g:pymode_syntax_all=1
-let g:pymode_syntax_print_as_function=g:pymode_syntax_all
-let g:pymode_syntax_highlight_async_await=g:pymode_syntax_all
-let g:pymode_syntax_highlight_equal_operator=g:pymode_syntax_all
-let g:pymode_syntax_highlight_stars_operator=g:pymode_syntax_all
-let g:pymode_syntax_highlight_self=g:pymode_syntax_all
-let g:pymode_syntax_indent_errors=g:pymode_syntax_all
-let g:pymode_syntax_string_formatting=g:pymode_syntax_all
-let g:pymode_syntax_space_errors=g:pymode_syntax_all
-let g:pymode_syntax_string_format=g:pymode_syntax_all
-let g:pymode_syntax_string_templates=g:pymode_syntax_all
-let g:pymode_syntax_doctests=g:pymode_syntax_all
-let g:pymode_syntax_builtin_objs=g:pymode_syntax_all
-let g:pymode_syntax_builtin_types=g:pymode_syntax_all
-let g:pymode_syntax_highlight_exceptions=g:pymode_syntax_all
-let g:pymode_syntax_docstrings=g:pymode_syntax_all
+" let g:pymode_syntax=1
+" let g:pymode_syntax_slow_sync=1
+" let g:pymode_syntax_all=1
+" let g:pymode_syntax_print_as_function=g:pymode_syntax_all
+" let g:pymode_syntax_highlight_async_await=g:pymode_syntax_all
+" let g:pymode_syntax_highlight_equal_operator=g:pymode_syntax_all
+" let g:pymode_syntax_highlight_stars_operator=g:pymode_syntax_all
+" let g:pymode_syntax_highlight_self=g:pymode_syntax_all
+" let g:pymode_syntax_indent_errors=g:pymode_syntax_all
+" let g:pymode_syntax_string_formatting=g:pymode_syntax_all
+" let g:pymode_syntax_space_errors=g:pymode_syntax_all
+" let g:pymode_syntax_string_format=g:pymode_syntax_all
+" let g:pymode_syntax_string_templates=g:pymode_syntax_all
+" let g:pymode_syntax_doctests=g:pymode_syntax_all
+" let g:pymode_syntax_builtin_objs=g:pymode_syntax_all
+" let g:pymode_syntax_builtin_types=g:pymode_syntax_all
+" let g:pymode_syntax_highlight_exceptions=g:pymode_syntax_all
+" let g:pymode_syntax_docstrings=g:pymode_syntax_all
 
 " Python reformat with Black on save and reload buffer
 " autocmd BufWritePost *.py execute '!black %' | edit
 
 " Ale formatting and fixing Python
-let g:ale_linters = {'python': ['flake8', 'pydocstyle', 'bandit', 'mypy']}
+" let g:ale_linters = {'python': ['flake8', 'pydocstyle', 'bandit', 'mypy']}
+let g:ale_linters = {'python': ['pylint', 'pydocstyle', 'bandit', 'mypy']}
 let g:ale_fixers = {'python': ['black', 'isort']}
 let g:ale_fix_on_save = 1
+let g:ale_lint_on_insert_leave = 0 " Slow
+let g:ale_lint_on_text_changed = 0 " Slow

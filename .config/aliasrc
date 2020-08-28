@@ -42,7 +42,7 @@ alias \
 	z="zathura" \
     s="sxiv" \
     nb="newsboat" \
-    nm="neomutt" \
+    mu="neomutt" \
 	p="sudo pacman" \
     pac="sudo pacman -Syu" \
     pacq="pacman -Qeq" \
