@@ -20,7 +20,7 @@ case $1 in
     -d) arandr & ;;
     -n) nmtui ;;
     -s) pulsemixer ;;
-    -w) wal=`ls $WALLPAPER_DIR | fzf` && setbg $WALLPAPER_DIR/$wal ;;
+    -w) wal=$(ls $WALLPAPER_DIR | fzf) && setbg $WALLPAPER_DIR/$wal ;;
     -wp) sxiv -t $WALLPAPER_DIR/* & ;;
     *)  help ;;
 esac

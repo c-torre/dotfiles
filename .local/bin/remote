@@ -14,8 +14,7 @@ Options:
 
 [ -z ${2+x} ] && help
 
-#host=`cut -d" " -f1 $HOME/.ssh/known_hosts | fzf`
-host=`cat $HOME/.ssh/known_hosts | tr ',' '\n' | tr -d '[' | cut -d' ' -f1 | fzf`
+host=$(cat $HOME/.ssh/known_hosts | tr ',' '\n' | tr -d '[' | cut -d' ' -f1 | fzf)
 mount_point=$XDG_DATA_HOME/mnt
 
 case $1 in
