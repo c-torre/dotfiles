@@ -42,3 +42,6 @@ License
 
 Al my files licensed under the GPLv3.
 Other files may have their own licenses.
+
+[voidrice](https://github.com/LukeSmithxyz/voidrice).
+[mpvSockets](https://github.com/wis/mpvSockets/tree/8415a08d99a46213c918613cfe1e088071018db9)
