@@ -1,26 +1,42 @@
 #!/bin/sh
+#
 # Common desktop settings
 
-help() {
-    echo "Usage: settings -option
+setting=$(echo "battery (show)
+displays
+network
+sound
+wallpaper
+wallpaper (show)" | fzf)
 
-Options:
--b: battery level
--d: displays
--n: network management
--s: sound mixer
--w: change wallpaper
--wp: wallpaper preview (does not set it)" && exit
-    }
-
-[ -z ${1+x} ] && help
-
-case $1 in
-    -b) cat /sys/class/power_supply/BAT?/capacity ;;
-    -d) arandr & ;;
-    -n) nmtui ;;
-    -s) pulsemixer ;;
-    -w) wal=$(ls $WALLPAPER_DIR | fzf) && setbg $WALLPAPER_DIR/$wal ;;
-    -wp) sxiv -t $WALLPAPER_DIR/* & ;;
-    *)  help ;;
+case $setting in
+    "battery (show)") cat /sys/class/power_supply/BAT?/capacity ;;
+    "displays" ) arandr & ;;
+    "network"  ) nmtui ;;
+    "sound"    ) pulsemixer ;;
+    "wallpaper") wal=$(ls $WALLPAPER_DIR | fzf) && setbg $WALLPAPER_DIR/$wal ;;
+    "wallpaper (show)") sxiv -t $WALLPAPER_DIR/* & ;;
+    *)  exit ;;
 esac
+
+# help() {
+#     echo "Usage: settings -option
+#
+# Options:
+# -b: battery level
+# -d: displays
+# -n: network management
+# -s: sound mixer
+# -w: change wallpaper
+# -wp: wallpaper preview (does not set it)" && exit
+#     }
+# [ -z ${1+x} ] && help
+# case $1 in
+#     -b) cat /sys/class/power_supply/BAT?/capacity ;;
+#     -d) arandr & ;;
+#     -n) nmtui ;;
+#     -s) pulsemixer ;;
+#     -w) wal=$(ls $WALLPAPER_DIR | fzf) && setbg $WALLPAPER_DIR/$wal ;;
+#     -wp) sxiv -t $WALLPAPER_DIR/* & ;;
+#     *)  help ;;
+# esac
