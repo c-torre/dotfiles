@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Mount cluster as file system
+# Manage remotes
 # TODO ssh key management
 
 help() {
@@ -14,12 +14,13 @@ Options:
     }
 
 mount_point=$XDG_DATA_HOME/mnt
+usernames_path=$HOME/.ssh/usernames
 
 [ -z ${1+x} ] && help
 
 [ "$1" = "-u" ] && fusermount3 -u $mount_point && unlink $HOME/mnt && echo "Remote unmounted"
 
-[ -z ${2+x} ] && username=$(cat $HOME/.ssh/usernames | fzf) || username=$2
+[ -z ${2+x} ] && [ -f $usernames_path ] && username=$(cat $usernames_path | fzf) || username=$2
 [ -z $username ] && help
 
 host=$(cat $HOME/.ssh/known_hosts | tr "," "\n" | tr -d "[" | cut -d" " -f1 | fzf)
