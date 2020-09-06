@@ -1,6 +1,7 @@
 #!/bin/sh
+#
 # Mount cluster as file system
-# Should clean script and UX
+# TODO ssh key management
 
 help() {
     echo "Usage: remote -option remote_username
@@ -12,15 +13,17 @@ Options:
 -u: fusermount3 -u -- umount remote" && exit
     }
 
+mount_point=$XDG_DATA_HOME/mnt
+
+[ "$1" = "-u" ] && fusermount3 -u $mount_point && unlink $HOME/mnt && echo "Remote unmounted" || echo "Failed to unmount or no mount point"
+
 [ -z ${2+x} ] && help
 
-host=$(cat $HOME/.ssh/known_hosts | tr ',' '\n' | tr -d '[' | cut -d' ' -f1 | fzf)
-mount_point=$XDG_DATA_HOME/mnt
+host=$(cat $HOME/.ssh/known_hosts | tr "," "\n" | tr -d "[" | cut -d" " -f1 | fzf)
 
 case $1 in
     -s)         ssh $2@$host ;;
     -f)         sftp $2@$host ;;
     -m)         sshfs $2@$host:/ $mount_point && ln -s $mount_point $HOME/mnt && echo "Remote successfully mounted at $HOME/mnt" ;;
-    -u)         fusermount3 -u $mount_point && unlink $HOME/mnt && echo "Remote unmounted" ;;
     *)          help ;;
 esac

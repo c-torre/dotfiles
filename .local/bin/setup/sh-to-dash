@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# Change /bin/sh symlink to `dash`
+
+ln -s /bin/dash /bin/sh
