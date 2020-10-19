@@ -13,6 +13,8 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
 " Almost defaults
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
+Plug 'frazrepo/vim-rainbow'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Aesthetics
 Plug 'morhetz/gruvbox'
 Plug 'ap/vim-buftabline'
@@ -25,6 +27,7 @@ Plug 'tpope/vim-eunuch'
 Plug 'airblade/vim-gitgutter'
 " Development
 " Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'ap/vim-css-color'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jpalardy/vim-slime'
 Plug 'majutsushi/tagbar'
@@ -41,11 +44,11 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 
 " Colorscheme
 colorscheme gruvbox
-let g:gruvbox_transparent_bg=1
-highlight Normal ctermbg=None " alpha
+" let g:gruvbox_transparent_bg=1
+" highlight Normal ctermbg=None " alpha
 
 " Airline statusbar theme
-let g:airline_theme='minimalist'
+let g:airline_theme='bubblegum'
 
 " Many sane defaults
 set t_Co=256                            " ALL the colors!
@@ -224,8 +227,9 @@ nmap <leader>c <Plug>SlimeSendCell
 
 " Ale formatting and fixing Python
 " let g:ale_linters = {'python': ['flake8', 'pydocstyle', 'bandit', 'mypy']}
-let g:ale_linters = {'python': ['pylint', 'pydocstyle', 'bandit', 'mypy']}
+" let g:ale_linters = {'python': ['pylint']} ", 'pydocstyle', 'bandit', 'mypy']}  # broken pylint
 let g:ale_fixers = {'python': ['black', 'isort']}
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_insert_leave = 0 " Slow
 let g:ale_lint_on_text_changed = 0 " Slow
+let g:ale_lint_on_enter = 0 " Slow
