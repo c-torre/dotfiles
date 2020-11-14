@@ -25,6 +25,7 @@ Plug 'junegunn/goyo.vim'
 " Toolkit
 Plug 'tpope/vim-eunuch'
 Plug 'airblade/vim-gitgutter'
+Plug 'vimwiki/vimwiki'
 " Development
 " Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'ap/vim-css-color'
@@ -163,7 +164,7 @@ let g:tex_flavor = 'latex'
     tnoremap <C-y> <C-\><C-n>
 
 " Vim slime
-    let g:slime_target = "neovim"
+    let g:slime_target = "tmux"
 
 " IPython cells -- probable deprecation for slime built-ins
 "    nnoremap <leader>c :IPythonCellExecuteCell<CR>
@@ -233,3 +234,8 @@ let g:ale_fix_on_save = 1
 let g:ale_lint_on_insert_leave = 0 " Slow
 let g:ale_lint_on_text_changed = 0 " Slow
 let g:ale_lint_on_enter = 0 " Slow
+
+" VimWiki
+let g:vimwiki_list = [{'path': '~/cloud/Notes',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
+nmap <Leader>w+ <Plug>VimwikiNormalizeLink
