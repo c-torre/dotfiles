@@ -1,0 +1,5 @@
+#!/bin/sh
+# Removes beep
+
+rmmod pcspkr
+echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
