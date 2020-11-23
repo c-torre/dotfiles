@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# Start/restart pulseaudio
+
+killall pulseaudio; sudo -u $USER pulseaudio --start
