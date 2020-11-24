@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# Merges multiple PDF files into one
+
+gs -sDEVICE=pdfwrite -dNOPAUSE -dBATCH -sOUTPUTFILE="$1" $@
