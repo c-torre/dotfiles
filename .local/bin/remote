@@ -13,12 +13,16 @@ Options:
 -u: fusermount3 -u -- umount remote" && exit
     }
 
+umount() {
+	[ "$1" = "-u" ] && [ -f $mount_point ]  ||  fusermount3 -u $mount_point && unlink $HOME/mnt && echo "Remote unmounted" || echo "Nothing mounted on $mount_point" ; exit
+}
+
 mount_point=$XDG_DATA_HOME/mnt
 usernames_path=$HOME/.ssh/usernames
 
 [ -z ${1+x} ] && help
 
-[ "$1" = "-u" ] && fusermount3 -u $mount_point && unlink $HOME/mnt && echo "Remote unmounted"
+[ "$1" = "-u" ] && umount
 
 [ -z ${2+x} ] && [ -f $usernames_path ] && username=$(cat $usernames_path | fzf) || username=$2
 [ -z $username ] && help
