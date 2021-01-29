@@ -82,7 +82,7 @@ let g:vimsyn_noerror=1                  " hack for correct syntax hlighting
 " tabs and indenting
 set tabstop=4                           " tabs appear as n number of columns
 set shiftwidth=4                        " n cols for auto-indenting
-set expandtab                           " spaces instead of tabs
+" set expandtab                           " spaces instead of tabs
 set autoindent                          " auto indents next new line
 
 " listchars
@@ -154,6 +154,8 @@ let g:tex_flavor = 'latex'
 
 " Automatically deletes all trailing whitespace at end of file on save.
 	autocmd BufWritePre * %s/\s\+$//e
+    autocmd BufWritePre * %s/\n\+\%$//e
+    autocmd BufWritePre *.[ch] %s/\%$/\r/e
 
 " Python
 
