@@ -75,7 +75,9 @@ bindkey '^e' edit-command-line
 
 # pfetch
 export PF_INFO="ascii os editor shell palette"
-pfetch
+# pfetch
+lolcat ~/.local/bin/lion
+echo ""
 
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null

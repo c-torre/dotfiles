@@ -35,3 +35,19 @@ case $1 in
     -m)         sshfs $username@$host:/ $mount_point && ln -s $mount_point $HOME/mnt && echo "Remote successfully mounted at $HOME/mnt" ;;
     *)          help ;;
 esac
+
+
+### From LARBS to update option handling
+# while getopts ":a:r:b:p:h" o; do case "${o}" in
+# 	h) printf "Optional arguments for custom use:\\n  -r: Dotfiles repository (local file or url)\\n  -p: Dependencies and programs csv (local file or url)\\n  -a: AUR helper (must have pacman-like syntax)\\n  -h: Show this message\\n" && exit 1 ;;
+# 	r) dotfilesrepo=${OPTARG} && git ls-remote "$dotfilesrepo" || exit 1 ;;
+# 	b) repobranch=${OPTARG} ;;
+# 	p) progsfile=${OPTARG} ;;
+# 	a) aurhelper=${OPTARG} ;;
+# 	*) printf "Invalid option: -%s\\n" "$OPTARG" && exit 1 ;;
+# esac done
+#
+# [ -z "$dotfilesrepo" ] && dotfilesrepo="https://github.com/lukesmithxyz/voidrice.git"
+# [ -z "$progsfile" ] && progsfile="https://raw.githubusercontent.com/LukeSmithxyz/LARBS/master/progs.csv"
+# [ -z "$aurhelper" ] && aurhelper="yay"
+# [ -z "$repobranch" ] && repobranch="master"
