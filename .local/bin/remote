@@ -20,6 +20,8 @@ umount() {
 mount_point=$XDG_DATA_HOME/mnt
 usernames_path=$HOME/.ssh/usernames
 
+mkdir -p $mount_point
+[ -f $usernames_path ] || echo "Error: No file at $usernames_path, please provide second argument or create one"
 [ -z ${1+x} ] && help
 
 [ "$1" = "-u" ] && umount

@@ -1,3 +1,5 @@
+" Neovim config
+
 let mapleader =","
 
 if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
@@ -8,7 +10,7 @@ if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autolo
 endif
 
 """"" Plugins
-" Install plugin with :PlugInstall, remove with :PlugClean
+" Quick guide: :PlugUpdate :PlugInstall :PlugClean :UpdateRemotePlugins
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
 " Almost defaults
 Plug 'tpope/vim-surround'
@@ -29,11 +31,11 @@ Plug 'vimwiki/vimwiki'
 " Development
 " Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'ap/vim-css-color'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}  " Requires ctags package
 Plug 'jpalardy/vim-slime'
 Plug 'majutsushi/tagbar'
 Plug 'dense-analysis/ale'
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Requires python-pynvim package
 "Plug 'luochen1990/rainbow'
 "Plug 'frazrepo/vim-rainbow'
 call plug#end()
@@ -241,3 +243,6 @@ let g:ale_lint_on_enter = 0 " Slow
 let g:vimwiki_list = [{'path': '~/cloud/Notes',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
 nmap <Leader>w+ <Plug>VimwikiNormalizeLink
+
+" NERDTree
+let NERDTreeShowHidden=1
