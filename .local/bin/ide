@@ -2,7 +2,8 @@
 #
 # Start tmux splits for development
 
-tmux split-window -v -p 30
+tmux split-window -v -p 25
+# tmux split-window -v -p 30
 tmux split-window -h -p 45
 tmux select-pane -t {top-left}
 tmux -c nvim

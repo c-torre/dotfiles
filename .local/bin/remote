@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 # Manage remotes
-# TODO ssh key management
+# TODO ssh key management, improve `case`
 
 help() {
     echo "Usage: remote OPTION USERNAME
