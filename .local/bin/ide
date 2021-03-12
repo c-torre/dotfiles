@@ -1,9 +1,22 @@
 #!/bin/sh
 #
-# Start tmux splits for development
+# Start tmux splits for development.
 
+set -- $(stty size) # $1 = rows $2 = columns
+
+name_session="dev"
+name_window="ide"
+
+# Size needs correcting from 80 x 24 to current
+tmux -2 new-session -d -s $name_session -x "$2" -y "$(($1 - 1))"
+tmux rename-window $name_window
+
+# Splits
 tmux split-window -v -p 25
-# tmux split-window -v -p 30
 tmux split-window -h -p 45
+
+# Neovim
 tmux select-pane -t {top-left}
-tmux -c nvim
+tmux send-keys "nvim" C-m
+
+tmux -2 attach-session -t $name_session
