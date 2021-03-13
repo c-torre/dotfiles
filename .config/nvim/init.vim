@@ -34,7 +34,7 @@ Plug 'ap/vim-css-color'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}  " Requires ctags package
 Plug 'jpalardy/vim-slime'
 Plug 'majutsushi/tagbar'
-Plug 'dense-analysis/ale'
+Plug 'dense-analysis/ale'  " Requires python-black, python-isort, shellcheck, prettier
 Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Requires python-pynvim package
 "Plug 'luochen1990/rainbow'
 "Plug 'frazrepo/vim-rainbow'
@@ -233,7 +233,13 @@ nmap <leader>c <Plug>SlimeSendCell
 " Ale formatting and fixing Python
 " let g:ale_linters = {'python': ['flake8', 'pydocstyle', 'bandit', 'mypy']}
 " let g:ale_linters = {'python': ['pylint']} ", 'pydocstyle', 'bandit', 'mypy']}  # broken pylint
-let g:ale_fixers = {'python': ['black', 'isort']}
+let g:ale_fixers = {
+			\'python': ['black', 'isort'],
+			\'html': ['prettier'],
+			\'css': ['prettier'],
+			\'javascript': ['prettier'],
+			\'yaml': ['prettier'],
+			\}
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_insert_leave = 0 " Slow
 let g:ale_lint_on_text_changed = 0 " Slow

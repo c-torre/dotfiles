@@ -20,21 +20,21 @@ umount() {
 mount_point=$XDG_DATA_HOME/mnt
 usernames_path=$HOME/.ssh/usernames
 
-mkdir -p $mount_point
-[ -f $usernames_path ] || echo "Error: No file at $usernames_path, please provide second argument or create one"
+mkdir -p "$mount_point"
+[ -f "$usernames_path" ] || echo "Error: No file at $usernames_path, please provide second argument or create one"
 [ -z ${1+x} ] && help
 
-[ "$1" = "-u" ] && umount
+[ "$1" = "-u" ] && umount "$@"
 
-[ -z ${2+x} ] && [ -f $usernames_path ] && username=$(cat $usernames_path | fzf) || username=$2
-[ -z $username ] && help
+[ -z ${2+x} ] && [ -f "$usernames_path" ] && username=$(fzf < "$usernames_path" ) || username=$2
+[ -z "$username" ] && help
 
-host=$(cat $HOME/.ssh/known_hosts | tr "," "\n" | tr -d "[" | cut -d" " -f1 | fzf)
+host=$(tr "," "\n" < "$HOME"/.ssh/known_hosts | tr -d "[" | cut -d" " -f1 | fzf)
 
 case $1 in
-    -s)         ssh $username@$host ;;
-    -f)         sftp $username@$host ;;
-    -m)         sshfs $username@$host:/ $mount_point && ln -s $mount_point $HOME/mnt && echo "Remote successfully mounted at $HOME/mnt" ;;
+    -s)         ssh "$username"@"$host" ;;
+    -f)         sftp "$username"@"$host" ;;
+    -m)         sshfs "$username"@"$host":/ "$mount_point" && ln -s "$mount_point" "$HOME"/mnt && echo "Remote successfully mounted at $HOME/mnt" ;;
     *)          help ;;
 esac
 
