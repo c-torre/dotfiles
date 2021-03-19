@@ -15,7 +15,7 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
 " Almost defaults
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
-Plug 'frazrepo/vim-rainbow'
+Plug 'luochen1990/rainbow'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Aesthetics
 Plug 'morhetz/gruvbox'
@@ -28,10 +28,11 @@ Plug 'junegunn/goyo.vim'
 Plug 'tpope/vim-eunuch'
 Plug 'airblade/vim-gitgutter'
 Plug 'vimwiki/vimwiki'
+Plug 'jiangmiao/auto-pairs'
 " Development
 " Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'ap/vim-css-color'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}  " Requires ctags package
+Plug 'neoclide/coc.nvim', {'branch': 'release'}  " Requires ctags package, :CocInstall coc-python
 Plug 'jpalardy/vim-slime'
 Plug 'majutsushi/tagbar'
 Plug 'dense-analysis/ale'  " Requires python-black, python-isort, shellcheck, prettier
@@ -252,3 +253,6 @@ nmap <Leader>w+ <Plug>VimwikiNormalizeLink
 
 " NERDTree
 let NERDTreeShowHidden=1
+
+" Rainbow Parentheses
+let g:rainbow_active = 1
