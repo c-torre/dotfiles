@@ -15,8 +15,6 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
 " Almost defaults
 Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
-Plug 'luochen1990/rainbow'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 " Aesthetics
 Plug 'morhetz/gruvbox'
 Plug 'ap/vim-buftabline'
@@ -24,21 +22,23 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'lervag/vimtex'
 Plug 'junegunn/goyo.vim'
+Plug 'ryanoasis/vim-devicons'  " pkg: ttf-nerd-fonts-symbols
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'luochen1990/rainbow'
 " Toolkit
 Plug 'tpope/vim-eunuch'
 Plug 'airblade/vim-gitgutter'
 Plug 'vimwiki/vimwiki'
 Plug 'jiangmiao/auto-pairs'
 " Development
-" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'ap/vim-css-color'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}  " Requires ctags package, :CocInstall coc-python
+Plug 'neoclide/coc.nvim', {'branch': 'release'}  " pkg: ctags; :CocInstall coc-?
 Plug 'jpalardy/vim-slime'
 Plug 'majutsushi/tagbar'
-Plug 'dense-analysis/ale'  " Requires python-black, python-isort, shellcheck, prettier
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " Requires python-pynvim package
-"Plug 'luochen1990/rainbow'
-"Plug 'frazrepo/vim-rainbow'
+Plug 'dense-analysis/ale'  " pkg: python-black, python-isort, shellcheck, prettier
+Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}  " pkg: python-pynvim
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 call plug#end()
 
 " Open NERDTree if opened directory or none
@@ -69,7 +69,6 @@ set backspace=2                         " full backspacing capabilities (indent,
 set scrolloff=10                        " keep 10 lines of context
 set number relativenumber               " show line numbers
 set directory=~/.vim/swap               " save swap files here
-"set ww=b,s,h,l,<,>,[,]                 " whichwrap -- left/right keys can traverse up/down
 set linebreak                           " attempt to wrap lines cleanly
 set wildmenu                            " enhanced tab-completion shows all matching cmds in a popup menu
 set wildmode=list:longest,full          " full completion options
@@ -95,10 +94,6 @@ set listchars=trail:·,precedes:«,extends:»,eol:↲,tab:▸\
 set statusline=\ \%f%m%r%h%w\ ::\ %y\ [%{&ff}]\%=\ [%p%%:\ %l/%L]\
 set laststatus=2
 set cmdheight=1
-
-" keep cursor centered
-" :nnoremap j jzz
-" :nnoremap k kzz
 
 " {{{ toggle colored right border after 80 chars
 set colorcolumn=0
@@ -160,19 +155,11 @@ let g:tex_flavor = 'latex'
     autocmd BufWritePre * %s/\n\+\%$//e
     autocmd BufWritePre *.[ch] %s/\%$/\r/e
 
-" Python
-
-    let g:pymode = 1
-    let g:pymode_run_bind = '<leader>r'
-
 " Terminal
     tnoremap <C-y> <C-\><C-n>
 
 " Vim slime
     let g:slime_target = "tmux"
-
-" IPython cells -- probable deprecation for slime built-ins
-"    nnoremap <leader>c :IPythonCellExecuteCell<CR>
 
 """"" CoC
 inoremap <silent><expr> <TAB>
@@ -202,34 +189,12 @@ endif
 let g:tagbar_autofocus=0
 let g:tagbar_width=20
 autocmd BufEnter *.py :call tagbar#autoopen(0)
+autocmd BufEnter *.tex :call tagbar#autoopen(0)
 
 " slime for IPython
 let g:slime_python_ipython = 1
 let g:slime_cell_delimiter = "#%%"
 nmap <leader>c <Plug>SlimeSendCell
-
-" Python syntax highlight
-" let g:pymode_syntax=1
-" let g:pymode_syntax_slow_sync=1
-" let g:pymode_syntax_all=1
-" let g:pymode_syntax_print_as_function=g:pymode_syntax_all
-" let g:pymode_syntax_highlight_async_await=g:pymode_syntax_all
-" let g:pymode_syntax_highlight_equal_operator=g:pymode_syntax_all
-" let g:pymode_syntax_highlight_stars_operator=g:pymode_syntax_all
-" let g:pymode_syntax_highlight_self=g:pymode_syntax_all
-" let g:pymode_syntax_indent_errors=g:pymode_syntax_all
-" let g:pymode_syntax_string_formatting=g:pymode_syntax_all
-" let g:pymode_syntax_space_errors=g:pymode_syntax_all
-" let g:pymode_syntax_string_format=g:pymode_syntax_all
-" let g:pymode_syntax_string_templates=g:pymode_syntax_all
-" let g:pymode_syntax_doctests=g:pymode_syntax_all
-" let g:pymode_syntax_builtin_objs=g:pymode_syntax_all
-" let g:pymode_syntax_builtin_types=g:pymode_syntax_all
-" let g:pymode_syntax_highlight_exceptions=g:pymode_syntax_all
-" let g:pymode_syntax_docstrings=g:pymode_syntax_all
-
-" Python reformat with Black on save and reload buffer
-" autocmd BufWritePost *.py execute '!black %' | edit
 
 " Ale formatting and fixing Python
 " let g:ale_linters = {'python': ['flake8', 'pydocstyle', 'bandit', 'mypy']}
@@ -253,6 +218,14 @@ nmap <Leader>w+ <Plug>VimwikiNormalizeLink
 
 " NERDTree
 let NERDTreeShowHidden=1
+let g:NERDTreeMinimalUI=1
 
 " Rainbow Parentheses
 let g:rainbow_active = 1
+
+" UltiSnips
+let g:UltiSnipsExpandTrigger="<c-e>"
+let g:UltiSnipsJumpForwardTrigger="<c-f>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+let g:UltiSnipsSnippetDirectories=["UltiSnips"]
+let g:ultisnips_python_style="numpy"
