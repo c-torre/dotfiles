@@ -47,7 +47,6 @@ call plug#end()
 	set title
 	set go=a
 	set mouse=a
-	set nohlsearch
 	set clipboard+=unnamedplus
 	set noshowmode
 	set noruler
@@ -180,9 +179,6 @@ call plug#end()
 	autocmd BufRead,BufNewFile /tmp/neomutt* map ZZ :Goyo\|x!<CR>
 	autocmd BufRead,BufNewFile /tmp/neomutt* map ZQ :Goyo\|q!<CR>
 
-" Enable Goyo for regular prose:
-	autocmd FileType markdown :Goyo
-
 " Automatically deletes all trailing whitespace and newlines at end of file on save.
 	autocmd BufWritePre * %s/\s\+$//e
 	autocmd BufWritePre * %s/\n\+\%$//e
@@ -282,10 +278,12 @@ nnoremap <leader>h :call ToggleHiddenAll()<CR>
 	" let g:ale_linters = {'python': ['flake8', 'pydocstyle', 'bandit', 'mypy']}
 	" let g:ale_linters = {'python': ['pylint']} ", 'pydocstyle', 'bandit', 'mypy']}  # broken pylint
 	let g:ale_fixers = {
-				\'python': ['black', 'isort'],
-				\'html': ['prettier'],
 				\'css': ['prettier'],
+				\'html': ['prettier'],
 				\'javascript': ['prettier'],
+				\'markdown': ['prettier'],
+				\'python': ['black', 'isort'],
+				\'vimwiki': ['prettier'],
 				\'yaml': ['prettier'],
 				\}
 	let g:ale_fix_on_save = 1
